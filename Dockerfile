@@ -1,10 +1,11 @@
 FROM node:current-alpine as build
-RUN mkdir -p /app
-WORKDIR app
-COPY package.json /app
+WORKDIR /usr/src/app
+COPY package*.json ./
 RUN npm install
 RUN npm install -g @angular/cli
 RUN npm install bulma
 RUN npm uninstall node-sass && npm install node-sass
 COPY . /app
-RUN ng build
+
+EXPOSE 8080
+CMD [ "npm", "start" ]
