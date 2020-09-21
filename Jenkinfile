@@ -33,7 +33,7 @@ node(){
     }
     stage('Push image'){
     withCredentials([usernamePassword( credentialsId: 'docker-hub-credentials', usernameVariable: 'sweta08', passwordVariable: 'sweta@123')]) {
-         docker.withRegistry('https://hub.docker.com', 'docker-hub-credentials') {
+         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
             docker.image(app.push())
             docker.image(app.push("latest"))
     }
