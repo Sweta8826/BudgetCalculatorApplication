@@ -1,0 +1,52 @@
+node(){
+    def app
+    try{
+        echo "Sending emails"
+     mail bcc: '', body: 'Started jenkin job', cc: '', from: '', replyTo: '', 
+        subject: 'Jenkin Node job', to: 'userjenkin@gmail.com'
+    stage('checkingout git'){
+        
+       git 'https://github.com/Sweta8826/budget-app-angular.git'
+    }
+    
+    stage('install dependency'){
+        
+        nodejs('nodejs'){
+            sh 'npm update'
+            sh 'npm install -g @angular/cli'
+            sh 'npm install bulma --save'
+            sh 'npm install -D typescript'
+            echo "Module installed"
+        }
+    }
+    stage('build') {
+        nodejs('nodejs') {
+            
+            sh 'npm run build '
+           
+            echo "Build completed"
+        }
+        
+    }
+     stage('Docker Image'){
+        app =docker.build("sweta123/budgetapp:${env.BUILD_ID}")
+    }
+    stage('Push image'){
+         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+            app.push("${env.BUILD_NUMBER}")
+            app.push("latest")
+    }
+    }
+    stage('Remove unused Images'){
+        sh "docker image prune -a -f"
+    }
+    
+} 
+    catch(err) {
+        
+        echo "Sending build failures to mail"
+       mail bcc: '', body: "${err}", cc: '', from: '', replyTo: '', 
+        subject: 'Failure', to: 'userjenkin@gmail.com'
+    }  
+
+}
