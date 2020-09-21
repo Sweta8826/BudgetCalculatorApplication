@@ -29,7 +29,7 @@ node(){
         
     }
      stage('Docker Image'){
-        app =docker.build("sweta123/budgetapp:${env.BUILD_ID}")
+        app =docker.build("sweta08/budgetapp:${env.BUILD_ID}")
     }
     stage('Push image'){
     withCredentials([usernamePassword( credentialsId: 'docker-hub-credentials', usernameVariable: 'sweta08', passwordVariable: 'sweta@123')]) {
