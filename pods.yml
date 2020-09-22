@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: budget-app-angular
+  labels:
+    app: budget-app-angular
+spec:
+  containers:
+    - name: budget-app-angular
+      image: sweta08/budgetapp:tagVersion
+      ports:
+        - containerPort: 8080
