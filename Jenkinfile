@@ -46,7 +46,7 @@ node(){
     stage('Deploy to kubernetes'){
       
       sh "chmod +x changeTag.sh"
-      sh "./changetag.sh ${env.BUILD_ID}"
+      sh "./changeTag.sh ${env.BUILD_ID}"
       sh "scp -o StrictHostkeyChecking=no services.yml budget-app-angular-pod.yml shyshweta88@35.202.8.179:/home/shyshweta88"
       
     }
