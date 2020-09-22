@@ -47,8 +47,9 @@ node(){
       
       sh "chmod +x changeTag.sh"
       sh "./changeTag.sh ${env.BUILD_ID}"
-      sshagent(['Kubernetes credential']){
-      sh "scp -o StrictHostkeyChecking=no services.yml budget-app-angular-pod.yml shyshweta88@35.202.8.179:/home/shyshweta88"
+      sshagent(['Kubernetes credential']) {
+      
+        sh "scp -o StrictHostKeyChecking=no services.yml budget-app-angular-pod.yml shyshweta88@35.202.8.179:/home/shyshweta88"
       
     }
     }
