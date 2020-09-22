@@ -43,6 +43,12 @@ node(){
         sh "docker image prune -a -f"
     }
     
+    stage('Deploy to kubernetes'){
+      
+      sh "chmod +x changeTag.sh"
+      sh "./changetag.sh ${env.BUILD_ID}"
+    }
+    
 } 
     catch(err) {
         
