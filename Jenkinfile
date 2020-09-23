@@ -9,8 +9,6 @@ node(){
     stage('install dependency and build'){
         
         nodejs('nodejs'){
-          sh 'npm cache clean --force'
-         
           sh 'npm update'
           sh 'npm install -g @angular/cli'
           sh 'npm install bulma'
