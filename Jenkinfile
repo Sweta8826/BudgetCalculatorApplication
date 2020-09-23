@@ -12,9 +12,7 @@ node(){
     stage('install dependency'){
         
         nodejs('nodejs'){
-            sh 'npm update'
-            sh 'npm install -g @angular/cli'
-            sh 'npm install bulma --save'
+            sh 'npm install '
             echo "Module installed"
         }
     }
