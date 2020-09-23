@@ -1,15 +1,11 @@
 {
   "name": "budget-app",
   "version": "1.0.0",
+  "private": true
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 4203",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "start": "node app.js",
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^7.2.12",
     "@angular/cdk": "^7.3.7",
