@@ -4,26 +4,22 @@ node(){
         echo "Sending emails"
      mail bcc: '', body: 'Started jenkin job', cc: '', from: '', replyTo: '', 
         subject: 'Jenkin Node job', to: 'userjenkin@gmail.com'
-    stage('checkingout git'){
-        
-       git 'https://github.com/Sweta8826/budget-app-angular.git'
-    }
+   
     
-    stage('install dependency'){
+    stage('install dependency and build'){
         
         nodejs('nodejs'){
-            sh 'npm install '
-            echo "Module installed"
-        }
-    }
-    stage('build') {
-        nodejs('nodejs') {
-            
-            sh 'npm run build '
+          sh 'npm cache clean --force'
+          sh 'npm install'
+          sh 'npm update'
+          sh 'npm install -g @angular/cli'
+          sh 'npm install bulma'
+          echo "Module installed"
+          sh 'npm run build '
            
-            echo "Build completed"
+          echo "Build completed"
+          
         }
-        
     }
      stage('Docker Image'){
         app =docker.build("sweta08/budgetapp:${env.BUILD_ID}")
