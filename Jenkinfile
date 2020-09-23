@@ -4,7 +4,10 @@ node(){
         echo "Sending emails"
      mail bcc: '', body: 'Started jenkin job', cc: '', from: '', replyTo: '', 
         subject: 'Jenkin Node job', to: 'userjenkin@gmail.com'
-   
+   stage('checkingout git'){
+        
+       git 'https://github.com/Sweta8826/budget-app-angular.git'
+    }
     
     stage('install dependency and build'){
         
