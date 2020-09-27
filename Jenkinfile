@@ -13,19 +13,19 @@ node(){
         
         nodejs('nodejs'){
           
+          sh 'npm update'
           sh 'npm install -g @angular/cli'
           sh 'npm install bulma'
           echo "Module installed"
-          sh 'npm run build '
-          sh 'npm install karma-junit-reporter --save-dev'
-          sh 'npm run cibuild'           
+          sh 'npm run build '           
           echo "Build completed"
+          sh 'npm ng test'
           
         }
     }
     
-      stage('Results') {
-      junit 'test-results.xml' // need to setup karma junit reporter
+      stage('karma-Results') {
+      junit 'karma-results.xml' // need to setup karma junit reporter
       archive 'myArtefact-*.tgz'
    }
    stage('Artifactory') {
