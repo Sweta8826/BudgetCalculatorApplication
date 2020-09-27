@@ -37,23 +37,25 @@ node(){
         sh "docker image prune -a -f"
     }
     
-    stage('push artifacts'){
-    
-   sh "zip -r buildArtifact${env.BUILD_ID}.zip dist"
-                rtUpload (
-                    serverId: 'artifactory',
-                    spec: '''{
-                        "files": [
-                            {
-                                "pattern": "buildArtifact*.zip",
-                                "target": "budget-calculator/"
-                            }
-                        ]
-                    }''',
-                    buildName: "${env.JOB_NAME}",
-                    buildNumber: "${env.BUILD_NUMBER}" 
-                )
+  stage('Results') {
+      junit 'test-results.xml' // need to setup karma junit reporter
+      archive 'myArtefact-*.tgz'
    }
+   stage('Artifactory') {
+       def uploadSpec = """{
+          "files": [
+            {
+              "pattern": "myArtefact-*.tgz",
+              "target": "budget-calculator/"
+            }
+         ]
+        }"""
+        def server = Artifactory.server 'artifactory'
+        def buildInfo = server.upload(uploadSpec)
+        buildInfo.retention maxBuilds: 2
+        server.publishBuildInfo(buildInfo)
+   }
+
 
 
     
