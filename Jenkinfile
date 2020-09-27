@@ -37,6 +37,26 @@ node(){
         sh "docker image prune -a -f"
     }
     
+    stage('push artifacts'){
+    
+   sh "zip -r buildArtifact${env.BUILD_ID}.zip dist"
+                rtUpload (
+                    serverId: 'artifactory',
+                    spec: '''{
+                        "files": [
+                            {
+                                "pattern": "buildArtifact*.zip",
+                                "target": "budget-calculator/"
+                            }
+                        ]
+                    }''',
+                    buildName: "${env.JOB_NAME}",
+                    buildNumber: "${env.BUILD_NUMBER}" 
+                )
+   }
+
+
+    
     stage('Deploy to kubernetes'){
       
       sh "chmod +x changeTag.sh"
