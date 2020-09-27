@@ -17,6 +17,7 @@ node(){
           sh 'npm install bulma'
           echo "Module installed"
           sh 'npm run build '
+          sh 'npm install karma-junit-reporter --save-dev'
            
           echo "Build completed"
           
