@@ -7,16 +7,15 @@ module.exports = function (config) {
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
       require('karma-jasmine'),
-      require('karma-chrome-launcher'),
+      require('karma-phantomjs-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-junit-reporter'),
       
       require('@angular-devkit/build-angular/plugins/karma')
     ],
-    reporters: ['junit'],    
+    reporters: ['progress','junit','coverage'],    
     junitReporter: { 
- outputDir: 'karma-results',    
- outputFile: 'karma-results.xml'    
+ outputDir : 'target/surefire-reports/'   
     },
     angularCli: {
       environment: 'dev',
@@ -25,8 +24,8 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['ChromeHeadless'],
+    browsers: ['PhantomJS'],
     autoWatch: false, 
-    singleRun: false
+    singleRun: true
   });
 };
