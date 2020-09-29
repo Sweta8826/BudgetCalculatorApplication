@@ -24,14 +24,6 @@ node(){
           
         }
     }
-      stage('SonarQube analysis'){
-         def scannerHome = tool 'SonarQube Scanner 2.8';
-    withSonarQubeEnv('sonarqube') { 
-      sh "${scannerHome}/bin/sonar-scanner"
-  
-  
-        }
-    }
     
       stage('karma-Results') {
       junit 'karma-results.xml' // need to setup karma junit reporter
