@@ -31,7 +31,7 @@ node(){
   -Dsonar.projectName=BudgetCalc \
   -Dsonar.projectKey=Budget-application \
   -Dsonar.sources=. \
-  -Dsonar.host.url=http://34.125.70.47 \
+  -Dsonar.host.url=http://34.125.103.99 \
   -Dsonar.login=d57931230907664712a22ce856b70efab0af8e66 \
   -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts,**/dist/**,**/docs/**,**/*.js,**/coverage/** \
   -Dsonar.tests=src/app \
