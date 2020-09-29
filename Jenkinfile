@@ -20,6 +20,7 @@ node(){
           sh 'npm run build '           
           echo "Build completed"
           sh 'npm install karma-junit-reporter --save-dev'
+          sh 'npm run test'
          
           
         }
