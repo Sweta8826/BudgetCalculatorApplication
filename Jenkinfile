@@ -19,36 +19,26 @@ node(){
           echo "Module installed"
           sh 'npm run build '           
           echo "Build completed"
-          sh 'npm install karma-junit-reporter --save-dev'
-          sh 'npm install karma-phantomjs-launcher --save-dev'
-          sh 'npm run test'
-         
+                   
           
         }
     }
     
-      stage('karma-Results') {
-      junit 'karma-results.xml' // need to setup karma junit reporter
-      archive 'myArtefact-*.tgz'
-   }
-   stage('Artifactory') {
-       def uploadSpec = """{
-          "files": [
-            {
-              "pattern": "myArtefact-*.tgz",
-              "target": "budget-calculator/"
-            }
-         ]
-        }"""
-        def server = Artifactory.server 'artifactory'
-        def buildInfo = server.upload(uploadSpec)
-        buildInfo.retention maxBuilds: 2
-        server.publishBuildInfo(buildInfo)
-   }
  
-     stage('Docker Image'){
+     stage('Docker Image build'){
         app =docker.build("sweta08/budgetapp:${env.BUILD_ID}")
     }
+
+     stage('Testing application'){
+
+         sh "docker run --name budgetapp${env.BUILD_ID} -d -p 80:80 sweta08/budgetapp:${env.BUILD_ID}"
+         sh "google-chrome-stable --headless --disable-gpu"
+         sh "pytest -v -s --html=test_result_${env.BUILD_ID}.html Test/Test.py"
+         sh "docker container stop budgetapp${env.BUILD_ID}"
+         echo "Docker container stopped"
+         sh "docker container rm budgetapp${env.BUILD_ID}"
+         echo "Docker container removed"
+}
     stage('Push image'){
     withCredentials([usernamePassword( credentialsId: 'docker-hub-credentials', usernameVariable: 'sweta08', passwordVariable: 'sweta@123')]) {
          docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
