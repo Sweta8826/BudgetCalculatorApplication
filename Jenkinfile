@@ -30,10 +30,11 @@ node(){
       sh "${scannerHome}/bin/sonar-scanner \
   -Dsonar.projectName=BudgetCalc \
   -Dsonar.projectKey=Budget-application \
-  -Dsonar.sources=. \
+  -Dsonar.sources=src/app
   -Dsonar.host.url=http://34.125.103.99 \
   -Dsonar.login=d57931230907664712a22ce856b70efab0af8e66 \
-  -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts,**/dist/**,**/docs/**,**/*.js,**/coverage/** \
+  -Dsonar.exclusions=**/node_modules/** \
+  -Dsonar.sources=src
   -Dsonar.tests=src/app \
   -Dsonar.test.inclusions=**/*.spec.ts \
   -Dsonar.ts.tslint.configPath=tslint.json \
